@@ -1,0 +1,53 @@
+Summary for ./Residence4.5._12.0.jar
+Decompiled with CFR 0_119
+
+
+com.bekvon.bukkit.residence.ResidenceCommandListener
+----------------------------
+
+onCommand(org.bukkit.command.CommandSender org.bukkit.command.Command java.lang.String java.lang.String[] )
+  Exception : org.benf.cfr.reader.util.CannotPerformDecode: reachable test BLOCK was exited and re-entered.
+
+
+com.bekvon.bukkit.residence.CommentedYamlConfiguration
+----------------------------
+
+insertComments(java.lang.String )
+  Unable to fully structure code
+
+
+com.bekvon.bukkit.residence.commands.listall
+----------------------------
+
+perform(java.lang.String[] boolean org.bukkit.command.Command org.bukkit.command.CommandSender )
+  Unable to fully structure code
+
+
+com.bekvon.bukkit.residence.commands.list
+----------------------------
+
+perform(java.lang.String[] boolean org.bukkit.command.Command org.bukkit.command.CommandSender )
+  Unable to fully structure code
+
+
+com.bekvon.bukkit.residence.commands.market
+----------------------------
+
+perform(java.lang.String[] boolean org.bukkit.command.Command org.bukkit.command.CommandSender )
+  Exception : org.benf.cfr.reader.util.CannotPerformDecode: reachable test BLOCK was exited and re-entered.
+
+
+com.bekvon.bukkit.residence.listeners.ResidenceEntityListener
+----------------------------
+
+onEntityExplode(org.bukkit.event.entity.EntityExplodeEvent )
+  Unable to fully structure code
+
+
+com.bekvon.bukkit.residence.text.help.HelpEntry
+----------------------------
+
+getHelpData(org.bukkit.command.CommandSender boolean )
+  Exception : org.benf.cfr.reader.util.CannotPerformDecode: reachable test BLOCK was exited and re-entered.
+getSubCommands(org.bukkit.command.CommandSender java.lang.String[] )
+  Exception : org.benf.cfr.reader.util.CannotPerformDecode: reachable test BLOCK was exited and re-entered.
