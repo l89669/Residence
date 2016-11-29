@@ -1,179 +1,203 @@
-/*
- * Decompiled with CFR 0_119.
- * 
- * Could not load the following classes:
- *  com.google.common.io.Files
- *  org.apache.commons.lang.StringEscapeUtils
- *  org.bukkit.configuration.file.YamlConfiguration
- */
 package com.bekvon.bukkit.residence;
 
-import com.google.common.io.Files;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
+
 import org.apache.commons.lang.StringEscapeUtils;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-public class CommentedYamlConfiguration
-extends YamlConfiguration {
-    private HashMap<String, String> comments = new HashMap();
+import com.google.common.io.Files;
 
+/* 
+ * Based on CommentedYamlConfiguration by dumptruckman
+ * https://github.com/dumptruckman/PluginBase/blob/master/bukkit/src/main/java/com/dumptruckman/minecraft/pluginbase/config/CommentedYamlConfiguration.java
+ */
+
+public class CommentedYamlConfiguration extends YamlConfiguration {
+    private HashMap<String, String> comments;
+
+    public CommentedYamlConfiguration() {
+	super();
+	comments = new HashMap<String, String>();
+    }
+
+    @Override
     public void save(String file) throws IOException {
-        if (file == null) {
-            throw new IllegalArgumentException("File cannot be null");
-        }
-        this.save(new File(file));
+	if (file == null) {
+	    throw new IllegalArgumentException("File cannot be null");
+	}
+
+	save(new File(file));
     }
 
+    @Override
     public void save(File file) throws IOException {
-        if (file == null) {
-            throw new IllegalArgumentException("File cannot be null");
-        }
-        Files.createParentDirs((File)file);
-        String data = this.insertComments(this.saveToString());
-        data = data.replace("\\x", "\\u00");
-        data = StringEscapeUtils.unescapeJava((String)data);
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter((OutputStream)new FileOutputStream(file), StandardCharsets.UTF_8));
-        try {
-            writer.write(data);
-        }
-        finally {
-            writer.close();
-        }
+	if (file == null) {
+	    throw new IllegalArgumentException("File cannot be null");
+	}
+
+	Files.createParentDirs(file);
+
+	String data = insertComments(saveToString());
+	data = data.replace("\\x", "\\u00");
+	data = StringEscapeUtils.unescapeJava(data);
+		
+	Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8));
+
+	try {
+	    writer.write(data);
+	} finally {
+	    writer.close();
+	}
     }
 
-    /*
-     * Unable to fully structure code
-     * Enabled aggressive block sorting
-     * Lifted jumps to return sites
-     */
     private String insertComments(String yaml) {
-        if (this.comments.isEmpty() != false) return yaml;
-        yamlContents = yaml.split("[" + System.getProperty("line.separator") + "]");
-        newContents = new StringBuilder();
-        currentPath = new StringBuilder();
-        commentedPath = false;
-        node = false;
-        depth = 0;
-        firstLine = true;
-        var12_9 = yamlContents;
-        var11_10 = var12_9.length;
-        var10_11 = 0;
-        while (var10_11 < var11_10) {
-            line = var12_9[var10_11];
-            if (!firstLine) ** GOTO lbl17
-            firstLine = false;
-            if (line.startsWith("#")) ** GOTO lbl70
-lbl17: // 2 sources:
-            if (!line.contains(": ") && (line.length() <= 1 || line.charAt(line.length() - 1) != ':')) ** GOTO lbl30
-            commentedPath = false;
-            node = true;
-            index = 0;
-            index = line.indexOf(": ");
-            if (index < 0) {
-                index = line.length() - 1;
-            }
-            if (!currentPath.toString().isEmpty()) ** GOTO lbl27
-            currentPath = new StringBuilder(line.substring(0, index));
-            ** GOTO lbl61
-lbl27: // 1 sources:
-            whiteSpace = 0;
-            n = 0;
-            ** GOTO lbl35
-lbl30: // 1 sources:
-            node = false;
-            ** GOTO lbl61
-            while (line.charAt(n) == ' ') {
-                ++whiteSpace;
-                ++n;
-lbl35: // 2 sources:
-                if (n < line.length()) continue;
-            }
-            if (whiteSpace / 2 <= depth) ** GOTO lbl40
-            currentPath.append(".").append(line.substring(whiteSpace, index));
-            ++depth;
-            ** GOTO lbl61
-lbl40: // 1 sources:
-            if (whiteSpace / 2 >= depth) ** GOTO lbl44
-            newDepth = whiteSpace / 2;
-            i = 0;
-            ** GOTO lbl53
-lbl44: // 1 sources:
-            lastIndex = currentPath.lastIndexOf(".");
-            if (lastIndex < 0) {
-                currentPath = new StringBuilder();
-            } else {
-                currentPath.replace(currentPath.lastIndexOf("."), currentPath.length(), "").append(".");
-            }
-            currentPath.append(line.substring(whiteSpace, index));
-            ** GOTO lbl61
-lbl-1000: // 1 sources:
-            {
-                currentPath.replace(currentPath.lastIndexOf("."), currentPath.length(), "");
-                ++i;
-lbl53: // 2 sources:
-                ** while (i < depth - newDepth)
-            }
-lbl54: // 1 sources:
-            lastIndex = currentPath.lastIndexOf(".");
-            if (lastIndex < 0) {
-                currentPath = new StringBuilder();
-            } else {
-                currentPath.replace(currentPath.lastIndexOf("."), currentPath.length(), "").append(".");
-            }
-            currentPath.append(line.substring(whiteSpace, index));
-            depth = newDepth;
-lbl61: // 5 sources:
-            newLine = new StringBuilder(line);
-            if (node) {
-                comment = null;
-                if (!commentedPath && (comment = this.comments.get(currentPath.toString())) != null && !comment.isEmpty()) {
-                    newLine.insert(0, System.getProperty("line.separator")).insert(0, comment);
-                    comment = null;
-                    commentedPath = true;
-                }
-            }
-            newLine.append(System.getProperty("line.separator"));
-            newContents.append(newLine.toString());
-lbl70: // 2 sources:
-            ++var10_11;
-        }
-        return newContents.toString();
+	// if there's comments to add, we need to add comments
+	if (!comments.isEmpty()) {
+	    // String array of each line in the config file
+	    String[] yamlContents = yaml.split("[" + System.getProperty("line.separator") + "]");
+
+	    // This will hold the entire newly formatted config
+	    StringBuilder newContents = new StringBuilder();
+	    // This holds the current path the lines are at in the config
+	    StringBuilder currentPath = new StringBuilder();
+	    // This tells if the specified path has already been commented
+	    boolean commentedPath = false;
+	    // This flags if the line is a node or unknown text.
+	    boolean node = false;
+	    // The depth of the path. (number of words separated by periods - 1)
+	    int depth = 0;
+
+	    // This will cause the first line to be ignored.
+	    boolean firstLine = true;
+	    // Loop through the config lines
+	    for (final String line : yamlContents) {
+		if (firstLine) {
+		    firstLine = false;
+		    if (line.startsWith("#")) {
+			continue;
+		    }
+		}
+		// If the line is a node (and not something like a list value)
+		if (line.contains(": ") || (line.length() > 1 && line.charAt(line.length() - 1) == ':')) {
+		    // This is a new node so we need to mark it for commenting (if there are comments)
+		    commentedPath = false;
+		    // This is a node so flag it as one
+		    node = true;
+
+		    // Grab the index of the end of the node name
+		    int index = 0;
+		    index = line.indexOf(": ");
+		    if (index < 0) {
+			index = line.length() - 1;
+		    }
+		    // If currentPath is empty, store the node name as the currentPath. (this is only on the first iteration, i think)
+		    if (currentPath.toString().isEmpty()) {
+			currentPath = new StringBuilder(line.substring(0, index));
+		    } else {
+			// Calculate the whitespace preceding the node name
+			int whiteSpace = 0;
+			for (int n = 0; n < line.length(); n++) {
+			    if (line.charAt(n) == ' ') {
+				whiteSpace++;
+			    } else {
+				break;
+			    }
+			}
+			// Find out if the current depth (whitespace * 2) is greater/lesser/equal to the previous depth
+			if (whiteSpace / 2 > depth) {
+			    // Path is deeper.  Add a . and the node name
+			    currentPath.append(".").append(line.substring(whiteSpace, index));
+			    depth++;
+			} else if (whiteSpace / 2 < depth) {
+			    // Path is shallower, calculate current depth from whitespace (whitespace / 2) and subtract that many levels from the currentPath
+			    int newDepth = whiteSpace / 2;
+			    for (int i = 0; i < depth - newDepth; i++) {
+				currentPath.replace(currentPath.lastIndexOf("."), currentPath.length(), "");
+			    }
+			    // Grab the index of the final period
+			    int lastIndex = currentPath.lastIndexOf(".");
+			    if (lastIndex < 0) {
+				// if there isn't a final period, set the current path to nothing because we're at root
+				currentPath = new StringBuilder();
+			    } else {
+				// If there is a final period, replace everything after it with nothing
+				currentPath.replace(currentPath.lastIndexOf("."), currentPath.length(), "").append(".");
+			    }
+			    // Add the new node name to the path
+			    currentPath.append(line.substring(whiteSpace, index));
+			    // Reset the depth
+			    depth = newDepth;
+			} else {
+			    // Path is same depth, replace the last path node name to the current node name
+			    int lastIndex = currentPath.lastIndexOf(".");
+			    if (lastIndex < 0) {
+				// if there isn't a final period, set the current path to nothing because we're at root
+				currentPath = new StringBuilder();
+			    } else {
+				// If there is a final period, replace everything after it with nothing
+				currentPath.replace(currentPath.lastIndexOf("."), currentPath.length(), "").append(".");
+			    }
+			    //currentPath = currentPath.replace(currentPath.substring(currentPath.lastIndexOf(".")), "");
+			    currentPath.append(line.substring(whiteSpace, index));
+			}
+		    }
+		} else {
+		    node = false;
+		}
+		StringBuilder newLine = new StringBuilder(line);
+		if (node) {
+		    String comment = null;
+		    if (!commentedPath) {
+			// If there's a comment for the current path, retrieve it and flag that path as already commented
+			comment = comments.get(currentPath.toString());
+		    }
+		    if (comment != null && !comment.isEmpty()) {
+			// Add the comment to the beginning of the current line
+			newLine.insert(0, System.getProperty("line.separator")).insert(0, comment);
+			comment = null;
+			commentedPath = true;
+		    }
+		}
+		newLine.append(System.getProperty("line.separator"));
+		// Add the (modified) line to the total config String
+		newContents.append(newLine.toString());
+	    }
+
+	    return newContents.toString();
+	}
+	return yaml;
     }
 
-    public /* varargs */ void addComment(String path, String ... commentLines) {
-        StringBuilder commentstring = new StringBuilder();
-        String leadingSpaces = "";
-        int n = 0;
-        while (n < path.length()) {
-            if (path.charAt(n) == '.') {
-                leadingSpaces = String.valueOf(leadingSpaces) + "  ";
-            }
-            ++n;
-        }
-        String[] arrstring = commentLines;
-        int n2 = arrstring.length;
-        int n3 = 0;
-        while (n3 < n2) {
-            String line = arrstring[n3];
-            if (!line.isEmpty()) {
-                line = String.valueOf(leadingSpaces) + "# " + line;
-            }
-            if (commentstring.length() > 0) {
-                commentstring.append(System.getProperty("line.separator"));
-            }
-            commentstring.append(line);
-            ++n3;
-        }
-        this.comments.put(path, commentstring.toString());
+    /**
+     * Adds a comment just before the specified path.  The comment can be multiple lines.  An empty string will indicate a blank line.
+     *
+     * @param path         Configuration path to add comment.
+     * @param commentLines Comments to add.  One String per line.
+     */
+    public void addComment(String path, String... commentLines) {
+	StringBuilder commentstring = new StringBuilder();
+	String leadingSpaces = "";
+	for (int n = 0; n < path.length(); n++) {
+	    if (path.charAt(n) == '.') {
+		leadingSpaces += "  ";
+	    }
+	}
+	for (String line : commentLines) {
+	    if (!line.isEmpty()) {
+		line = leadingSpaces + "# " + line;
+	    }
+	    if (commentstring.length() > 0) {
+		commentstring.append(System.getProperty("line.separator"));
+	    }
+	    commentstring.append(line);
+	}
+	comments.put(path, commentstring.toString());
     }
 }
-

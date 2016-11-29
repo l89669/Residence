@@ -1,35 +1,29 @@
-/*
- * Decompiled with CFR 0_119.
- */
 package com.bekvon.bukkit.residence.event;
 
-import com.bekvon.bukkit.residence.event.ResidenceEvent;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 
-public class ResidenceRenameEvent
-extends ResidenceEvent {
+public class ResidenceRenameEvent extends ResidenceEvent {
     protected String NewResName;
     protected String OldResName;
     protected ClaimedResidence res;
 
     public ResidenceRenameEvent(ClaimedResidence resref, String NewName, String OldName) {
-        super("RESIDENCE_RENAME", resref);
-        this.NewResName = NewName;
-        this.OldResName = OldName;
-        this.res = resref;
+	super("RESIDENCE_RENAME", resref);
+	NewResName = NewName;
+	OldResName = OldName;
+	res = resref;
     }
 
     public String getNewResidenceName() {
-        return this.NewResName;
+	return NewResName;
     }
 
     public String getOldResidenceName() {
-        return this.OldResName;
+	return OldResName;
     }
 
     @Override
     public ClaimedResidence getResidence() {
-        return this.res;
+	return res;
     }
 }
-

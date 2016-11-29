@@ -1,9 +1,5 @@
-/*
- * Decompiled with CFR 0_119.
- */
 package com.bekvon.bukkit.residence.dynmap;
 
-import com.bekvon.bukkit.residence.ConfigManager;
 import com.bekvon.bukkit.residence.Residence;
 
 class AreaStyle {
@@ -18,15 +14,14 @@ class AreaStyle {
     int y;
 
     AreaStyle() {
-        this.strokecolor = Residence.getConfigManager().DynMapBorderColor;
-        this.forrentstrokecolor = Residence.getConfigManager().DynMapFillForRent;
-        this.rentedstrokecolor = Residence.getConfigManager().DynMapFillRented;
-        this.forsalestrokecolor = Residence.getConfigManager().DynMapFillForSale;
-        this.strokeopacity = Residence.getConfigManager().DynMapBorderOpacity;
-        this.strokeweight = Residence.getConfigManager().DynMapBorderWeight;
-        this.fillcolor = Residence.getConfigManager().DynMapFillColor;
-        this.fillopacity = Residence.getConfigManager().DynMapFillOpacity;
-        this.y = 64;
+	strokecolor = Residence.getConfigManager().DynMapBorderColor;
+	forrentstrokecolor = Residence.getConfigManager().DynMapFillForRent;
+	rentedstrokecolor = Residence.getConfigManager().DynMapFillRented;
+	forsalestrokecolor = Residence.getConfigManager().DynMapFillForSale;
+	strokeopacity = Residence.getConfigManager().DynMapBorderOpacity;
+	strokeweight = Residence.getConfigManager().DynMapBorderWeight;
+	fillcolor = Residence.getConfigManager().DynMapFillColor;
+	fillopacity = Residence.getConfigManager().DynMapFillOpacity;
+	y = 64;
     }
 }
-

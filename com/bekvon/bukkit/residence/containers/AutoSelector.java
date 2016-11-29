@@ -1,6 +1,3 @@
-/*
- * Decompiled with CFR 0_119.
- */
 package com.bekvon.bukkit.residence.containers;
 
 import com.bekvon.bukkit.residence.permissions.PermissionGroup;
@@ -10,16 +7,15 @@ public class AutoSelector {
     private long time;
 
     public AutoSelector(PermissionGroup group, long time) {
-        this.group = group;
-        this.time = time;
+	this.group = group;
+	this.time = time;
     }
 
     public long getTime() {
-        return this.time;
+	return this.time;
     }
 
     public PermissionGroup getGroup() {
-        return this.group;
+	return this.group;
     }
 }
-

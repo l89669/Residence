@@ -1,64 +1,59 @@
-/*
- * Decompiled with CFR 0_119.
- * 
- * Could not load the following classes:
- *  org.bukkit.entity.Player
- */
 package com.bekvon.bukkit.residence.api;
+
+import java.util.List;
+import java.util.Set;
+
+import org.bukkit.entity.Player;
 
 import com.bekvon.bukkit.residence.economy.rent.RentedLand;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
-import java.util.List;
-import java.util.Set;
-import org.bukkit.entity.Player;
 
 public interface MarketRentInterface {
     public Set<ClaimedResidence> getRentableResidences();
 
     public Set<ClaimedResidence> getCurrentlyRentedResidences();
 
-    public RentedLand getRentedLand(String var1);
+    public RentedLand getRentedLand(String landName);
 
-    public List<String> getRentedLands(String var1);
+    public List<String> getRentedLands(String playerName);
 
-    public void setForRent(Player var1, String var2, int var3, int var4, boolean var5, boolean var6);
+    public void setForRent(Player player, String landName, int amount, int days, boolean AllowRenewing, boolean resadmin);
 
-    public void setForRent(Player var1, String var2, int var3, int var4, boolean var5, boolean var6, boolean var7);
+    public void setForRent(Player player, String landName, int amount, int days, boolean AllowRenewing, boolean StayInMarket, boolean resadmin);
 
-    public void setForRent(Player var1, String var2, int var3, int var4, boolean var5, boolean var6, boolean var7, boolean var8);
+    public void setForRent(Player player, String landName, int amount, int days, boolean AllowRenewing, boolean StayInMarket, boolean AllowAutoPay, boolean resadmin);
 
-    public void rent(Player var1, String var2, boolean var3, boolean var4);
+    public void rent(Player player, String landName, boolean repeat, boolean resadmin);
 
-    public void removeFromForRent(Player var1, String var2, boolean var3);
+    public void removeFromForRent(Player player, String landName, boolean resadmin);
 
-    public void unrent(Player var1, String var2, boolean var3);
+    public void unrent(Player player, String landName, boolean resadmin);
 
-    public void removeFromRent(String var1);
+    public void removeFromRent(String landName);
 
-    public void removeRentable(String var1);
+    public void removeRentable(String landName);
 
-    public boolean isForRent(String var1);
+    public boolean isForRent(String landName);
 
-    public boolean isRented(String var1);
+    public boolean isRented(String landName);
 
-    public String getRentingPlayer(String var1);
+    public String getRentingPlayer(String landName);
 
-    public int getCostOfRent(String var1);
+    public int getCostOfRent(String landName);
 
-    public boolean getRentableRepeatable(String var1);
+    public boolean getRentableRepeatable(String landName);
 
-    public boolean getRentedAutoRepeats(String var1);
+    public boolean getRentedAutoRepeats(String landName);
 
-    public int getRentDays(String var1);
+    public int getRentDays(String landName);
 
     public void checkCurrentRents();
 
-    public void setRentRepeatable(Player var1, String var2, boolean var3, boolean var4);
+    public void setRentRepeatable(Player player, String landName, boolean value, boolean resadmin);
 
-    public void setRentedRepeatable(Player var1, String var2, boolean var3, boolean var4);
+    public void setRentedRepeatable(Player player, String landName, boolean value, boolean resadmin);
 
-    public int getRentCount(String var1);
+    public int getRentCount(String player);
 
-    public int getRentableCount(String var1);
+    public int getRentableCount(String player);
 }
-

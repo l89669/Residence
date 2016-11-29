@@ -1,31 +1,28 @@
-/*
- * Decompiled with CFR 0_119.
- */
 package com.bekvon.bukkit.residence.containers;
 
 public class CommandStatus {
+
     private Boolean simple;
     private Integer priority;
 
     public CommandStatus(Boolean simple, Integer priority) {
-        this.simple = simple;
-        this.priority = priority;
+	this.simple = simple;
+	this.priority = priority;
     }
 
     public Integer getPriority() {
-        return this.priority;
+	return priority;
     }
 
     public void setPriority(Integer priority) {
-        this.priority = priority;
+	this.priority = priority;
     }
 
     public Boolean getSimple() {
-        return this.simple;
+	return simple;
     }
 
     public void setSimple(Boolean simple) {
-        this.simple = simple;
+	this.simple = simple;
     }
 }
-

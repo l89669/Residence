@@ -1,12 +1,3 @@
-/*
- * Decompiled with CFR 0_119.
- * 
- * Could not load the following classes:
- *  org.bukkit.command.CommandSender
- *  org.bukkit.event.Cancellable
- *  org.bukkit.event.Event
- *  org.bukkit.event.HandlerList
- */
 package com.bekvon.bukkit.residence.event;
 
 import org.bukkit.command.CommandSender;
@@ -14,15 +5,10 @@ import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class ResidenceCommandEvent
-extends Event
-implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-    protected boolean cancelled = false;
-    protected String cmd;
-    protected String[] arglist;
-    CommandSender commandsender;
+public class ResidenceCommandEvent extends Event implements Cancellable {
 
+    private static final HandlerList handlers = new HandlerList();
+    @Override
     public HandlerList getHandlers() {
         return handlers;
     }
@@ -31,30 +17,43 @@ implements Cancellable {
         return handlers;
     }
 
-    public ResidenceCommandEvent(String command2, String[] args, CommandSender sender) {
-        this.arglist = args;
-        this.cmd = command2;
-        this.commandsender = sender;
+    protected boolean cancelled;
+    protected String cmd;
+    protected String arglist[];
+    CommandSender commandsender;
+
+    public ResidenceCommandEvent(String command, String args[], CommandSender sender)
+    {
+        super();
+        cancelled = false;
+        arglist = args;
+        cmd = command;
+        commandsender = sender;
     }
 
+    @Override
     public boolean isCancelled() {
-        return this.cancelled;
+        return cancelled;
     }
 
+    @Override
     public void setCancelled(boolean bln) {
-        this.cancelled = bln;
+        cancelled = bln;
     }
 
-    public String getCommand() {
-        return this.cmd;
+    public String getCommand()
+    {
+        return cmd;
     }
 
-    public String[] getArgs() {
-        return this.arglist;
+    public String[] getArgs()
+    {
+        return arglist;
     }
 
-    public CommandSender getSender() {
-        return this.commandsender;
+    public CommandSender getSender()
+    {
+        return commandsender;
     }
+
 }
-

@@ -1,50 +1,45 @@
-/*
- * Decompiled with CFR 0_119.
- * 
- * Could not load the following classes:
- *  org.bukkit.ChatColor
- *  org.bukkit.command.Command
- *  org.bukkit.command.CommandSender
- */
 package com.bekvon.bukkit.residence.commands;
 
+import java.util.Arrays;
+
+import org.bukkit.ChatColor;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
 import com.bekvon.bukkit.residence.Residence;
 import com.bekvon.bukkit.residence.containers.CommandAnnotation;
 import com.bekvon.bukkit.residence.containers.ConfigReader;
 import com.bekvon.bukkit.residence.containers.cmd;
-import java.util.Arrays;
-import java.util.List;
-import org.bukkit.ChatColor;
-import org.bukkit.command.Command;
-import org.bukkit.command.CommandSender;
 
-public class version
-implements cmd {
-    @CommandAnnotation(simple=0, priority=5900)
+public class version implements cmd {
+
     @Override
-    public boolean perform(String[] args, boolean resadmin2, Command command2, CommandSender sender) {
-        sender.sendMessage((Object)ChatColor.GRAY + "------------------------------------");
-        sender.sendMessage((Object)ChatColor.RED + "This server running " + (Object)ChatColor.GOLD + "Residence" + (Object)ChatColor.RED + " version: " + (Object)ChatColor.BLUE + Residence.getResidenceVersion());
-        sender.sendMessage((Object)ChatColor.GREEN + "Created by: " + (Object)ChatColor.YELLOW + "bekvon");
-        sender.sendMessage((Object)ChatColor.GREEN + "Updated to 1.8 by: " + (Object)ChatColor.YELLOW + "DartCZ");
-        sender.sendMessage((Object)ChatColor.GREEN + "Currently maintained by: " + (Object)ChatColor.YELLOW + "Zrips");
-        String names = null;
-        for (String auth : Residence.getAuthors()) {
-            names = names == null ? auth : String.valueOf(names) + ", " + auth;
-        }
-        sender.sendMessage((Object)ChatColor.GREEN + "Authors: " + (Object)ChatColor.YELLOW + names);
-        sender.sendMessage((Object)ChatColor.DARK_AQUA + "For a command list, and help, see the wiki:");
-        sender.sendMessage((Object)ChatColor.GREEN + "https://github.com/bekvon/Residence/wiki");
-        sender.sendMessage((Object)ChatColor.AQUA + "Visit the Spigot Resource page at:");
-        sender.sendMessage((Object)ChatColor.BLUE + "https://www.spigotmc.org/resources/residence.11480/");
-        sender.sendMessage((Object)ChatColor.GRAY + "------------------------------------");
-        return true;
+    @CommandAnnotation(simple = false, priority = 5900)
+    public boolean perform(String[] args, boolean resadmin, Command command, CommandSender sender) {
+	sender.sendMessage(ChatColor.GRAY + "------------------------------------");
+	sender.sendMessage(ChatColor.RED + "This server running " + ChatColor.GOLD + "Residence" + ChatColor.RED + " version: " + ChatColor.BLUE + Residence
+	    .getResidenceVersion());
+	sender.sendMessage(ChatColor.GREEN + "Created by: " + ChatColor.YELLOW + "bekvon");
+	sender.sendMessage(ChatColor.GREEN + "Updated to 1.8 by: " + ChatColor.YELLOW + "DartCZ");
+	sender.sendMessage(ChatColor.GREEN + "Currently maintained by: " + ChatColor.YELLOW + "Zrips");
+	String names = null;
+	for (String auth : Residence.getAuthors()) {
+	    if (names == null)
+		names = auth;
+	    else
+		names = names + ", " + auth;
+	}
+	sender.sendMessage(ChatColor.GREEN + "Authors: " + ChatColor.YELLOW + names);
+	sender.sendMessage(ChatColor.DARK_AQUA + "For a command list, and help, see the wiki:");
+	sender.sendMessage(ChatColor.GREEN + "https://github.com/bekvon/Residence/wiki");
+	sender.sendMessage(ChatColor.AQUA + "Visit the Spigot Resource page at:");
+	sender.sendMessage(ChatColor.BLUE + "https://www.spigotmc.org/resources/residence.11480/");
+	sender.sendMessage(ChatColor.GRAY + "------------------------------------");
+	return true;
     }
 
     @Override
     public void getLocale(ConfigReader c, String path) {
-        c.get(String.valueOf(path) + "Description", "how residence version");
-        c.get(String.valueOf(path) + "Info", Arrays.asList("&eUsage: &6/res version"));
+	c.get(path + "Description", "how residence version");
+	c.get(path + "Info", Arrays.asList("&eUsage: &6/res version"));
     }
 }
-

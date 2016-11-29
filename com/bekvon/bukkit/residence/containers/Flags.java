@@ -1,6 +1,3 @@
-/*
- * Decompiled with CFR 0_119.
- */
 package com.bekvon.bukkit.residence.containers;
 
 public enum Flags {
@@ -105,77 +102,62 @@ public enum Flags {
     waterflow(326, 0, FlagMode.Residence, "Allows or denys water flow, overrides flow", true),
     wspeed1(373, 0, FlagMode.Residence, "Change players walk speed in residence to %1", true),
     wspeed2(373, 0, FlagMode.Residence, "Change players walk speed in residence to %1", true);
-    
+
     private int id;
     private int data;
     private FlagMode flagMode;
     private String desc;
     private boolean enabled;
 
-    private Flags(String id, int data, int flagMode, int desc, FlagMode enabled, String string2, boolean bl) {
-        this.id = id;
-        this.data = data;
-        this.flagMode = (FlagMode)flagMode;
-        this.desc = (String)desc;
-        this.enabled = (Object)enabled;
+    public static enum FlagMode {
+	Player, Residence, Both, Group
+    }
+
+    private Flags(int id, int data, FlagMode flagMode, String desc, boolean enabled) {
+	this.id = id;
+	this.data = data;
+	this.flagMode = flagMode;
+	this.desc = desc;
+	this.enabled = enabled;
     }
 
     public int getId() {
-        return this.id;
+	return id;
     }
 
     public int getData() {
-        return this.data;
+	return data;
     }
 
     public String getName() {
-        return this.name();
+	return this.name();
     }
 
     public FlagMode getFlagMode() {
-        return this.flagMode;
+	return flagMode;
     }
 
     public String getDesc() {
-        return this.desc;
+	return desc;
     }
 
     public void setDesc(String desc) {
-        this.desc = desc;
+	this.desc = desc;
     }
 
     public boolean isEnabled() {
-        return this.enabled;
+	return enabled;
     }
 
     public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
+	this.enabled = enabled;
     }
 
     public static Flags getFlag(String flag) {
-        Flags[] arrflags = Flags.values();
-        int n = arrflags.length;
-        int n2 = 0;
-        while (n2 < n) {
-            Flags f = arrflags[n2];
-            if (f.getName().equalsIgnoreCase(flag)) {
-                return f;
-            }
-            ++n2;
-        }
-        return null;
+	for (Flags f : Flags.values()) {
+	    if (f.getName().equalsIgnoreCase(flag))
+		return f;
+	}
+	return null;
     }
-
-    public static enum FlagMode {
-        Player,
-        Residence,
-        Both,
-        Group;
-        
-
-        private FlagMode(String string2, int n2) {
-        }
-    }
-
 }
-

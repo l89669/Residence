@@ -1,6 +1,3 @@
-/*
- * Decompiled with CFR 0_119.
- */
 package com.bekvon.bukkit.residence.shopStuff;
 
 public class Vote {
@@ -8,16 +5,17 @@ public class Vote {
     int amount;
 
     public Vote(double vote, int amount) {
-        this.vote = vote;
-        this.amount = amount;
+	this.vote = vote;
+	this.amount = amount;
+
     }
 
     public int getAmount() {
-        return this.amount;
+	return this.amount;
     }
 
     public double getVote() {
-        return this.vote;
+	return this.vote;
     }
-}
 
+}
